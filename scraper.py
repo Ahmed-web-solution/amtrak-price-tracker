@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from playwright.sync_api import sync_playwright
 
 ROUTES = [
@@ -47,18 +47,16 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Calendar kholein aur 15th available ngb-dp-day par click karein
+                # 3. Calendar kholein aur sirf VISIBLE (:not(.hidden)) valid day ke span par click karein
                 depart_label = page.locator('label:visible:has-text("Depart Date")').first
                 depart_label.click()
                 page.wait_for_timeout(1500)
 
-                available_days = page.locator('div.ngb-dp-day[aria-disabled="false"]:visible')
-                selected_cell = available_days.nth(15)
-                selected_date_label = selected_cell.get_attribute("aria-label") or "Next Available Date"
-                selected_cell.click()
+                valid_day_cell = page.locator('div.ngb-dp-day:not(.hidden)[aria-disabled="false"]:visible').nth(10)
+                selected_date_label = valid_day_cell.get_attribute("aria-label") or "Upcoming Date"
+                valid_day_cell.locator('span.calendar-day').click(force=True)
                 page.wait_for_timeout(1000)
 
-                # Agar calendar mein Done button ho to click karein
                 done_btn = page.locator('button:visible:has-text("Done")').first
                 if done_btn.is_visible():
                     done_btn.click()
@@ -68,7 +66,6 @@ def scrape_all_routes():
                 find_btn = page.locator('button[amt-auto-test-id="fare-finder-findtrains-button"]:visible').first
                 find_btn.click()
 
-                # Search results page (/tickets/departure.html) load hone ka wait karein
                 page.wait_for_timeout(15000)
 
                 # Screen text se Coach, Business, aur Private Rooms fares nikalein
@@ -83,9 +80,9 @@ def scrape_all_routes():
 
                     return {
                         current_url: window.location.href,
-                        coach: coachMatch ? coachMatch[1] : null,
-                        business: businessMatch ? businessMatch[1] : null,
-                        private_room: roomMatch ? roomMatch[1] : null,
+                        coach: coachMatch ? coachMatch : null,
+                        business: businessMatch ? businessMatch : null,
+                        private_room: roomMatch ? roomMatch : null,
                         all_matched_fares: [...new Set(allMatches)]
                     };
                 }""")
@@ -94,7 +91,7 @@ def scrape_all_routes():
                     extracted_fares["coach"]
                     or extracted_fares["business"]
                     or extracted_fares["private_room"]
-                    or (extracted_fares["all_matched_fares"][0] if extracted_fares["all_matched_fares"] else "Sold Out")
+                    or (extracted_fares["all_matched_fares"] if extracted_fares["all_matched_fares"] else "Sold Out")
                 )
 
                 results_list.append({
