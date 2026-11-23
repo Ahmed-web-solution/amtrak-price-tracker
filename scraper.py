@@ -8,9 +8,9 @@ ROUTES = [
 ]
 
 def scrape_all_routes():
-    # Aaj se 20 din baad ki tareekh (MM/DD/YYYY)
-    target_dt = datetime.now(timezone.utc) + timedelta(days=20)
+    target_dt = datetime.now(timezone.utc) + timedelta(days=10)
     travel_date = target_dt.strftime("%m/%d/%Y")
+    day_str = str(target_dt.day)
 
     results_list = []
 
@@ -27,7 +27,7 @@ def scrape_all_routes():
 
         for route in ROUTES:
             try:
-                page.goto("https://amtrak.com", timeout=60000, wait_until="domcontentloaded")
+                page.goto("https://www.amtrak.com/home", timeout=60000, wait_until="domcontentloaded")
                 page.wait_for_timeout(4000)
 
                 cookie_btn = page.locator("#onetrust-accept-btn-handler")
@@ -51,19 +51,31 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Depart Date mein keyboard se date type karke Enter dabayein
-                date_input = page.locator('input[amt-auto-test-id="fare-finder-depart-date-oneway"]:visible').first
-                date_input.click(force=True)
-                page.wait_for_timeout(500)
-                date_input.press_sequentially(travel_date, delay=100)
-                page.keyboard.press("Enter")
-                page.wait_for_timeout(1000)
+                # 3. Depart Date ke label par click karke calendar popup kholein
+                depart_label = page.locator('label:visible:has-text("Depart Date")').first
+                depart_label.click()
+                page.wait_for_timeout(2000)
+
+                # JavaScript se calendar ke andar enabled tareekh par click karein
+                clicked_date = page.evaluate(f"""() => {{
+                    const cells = Array.from(document.querySelectorAll('td, button, span, div'))
+                        .filter(el => el.innerText && el.innerText.trim() === '{day_str}' && el.offsetParent !== null);
+                    for (const el of cells) {{
+                        const parent = el.closest('td, button');
+                        if (parent && !parent.disabled && !parent.className.includes('disabled') && parent.getAttribute('aria-disabled') !== 'true') {{
+                            parent.click();
+                            return true;
+                        }}
+                    }}
+                    return false;
+                }}""")
+                page.wait_for_timeout(1500)
 
                 # 4. Find Trains button click karein
                 find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
-                find_btn.click(force=True)
+                find_btn.click()
 
-                # Search results page (/tickets/departure.html) load hone ka wait karein
+                # Results page (/tickets/departure.html) load hone ka wait karein
                 page.wait_for_timeout(15000)
 
                 # Screen text se Coach, Business, aur Private Rooms fares nikalein
@@ -97,6 +109,7 @@ def scrape_all_routes():
                     "to": route["to"],
                     "route_name": route["route_name"],
                     "travel_date": travel_date,
+                    "calendar_clicked": clicked_date,
                     "lowest_fare": lowest,
                     "fares_breakdown": {
                         "coach": extracted_fares["coach"] or "Sold Out / N/A",
