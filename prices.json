@@ -1,27 +1,19 @@
 {
-    "last_updated": "2026-11-23 21:56:58 UTC",
+    "last_updated": "2026-11-23 22:09:44 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "travel_date": "12/03/2026",
-            "lowest_fare": "Sold Out",
-            "all_fares_found": [],
-            "status": "success"
+            "status": "error",
+            "error": "Page.wait_for_url: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/tickets/departure.html**\" until \"load\"\n============================================================"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
-            "travel_date": "12/03/2026",
-            "lowest_fare": [
-                "$39"
-            ],
-            "all_fares_found": [
-                "$39"
-            ],
-            "status": "success"
+            "status": "error",
+            "error": "Page.wait_for_url: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/tickets/departure.html**\" until \"load\"\n============================================================"
         }
     ]
 }
