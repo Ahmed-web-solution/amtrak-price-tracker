@@ -2,15 +2,18 @@ import json
 from datetime import datetime, timedelta, timezone
 from playwright.sync_api import sync_playwright
 
+# Yahan aap jitne marzi stations/routes add kar sakte hain:
 ROUTES = [
     {"from": "NYP", "to": "LAX", "route_name": "New York to Los Angeles"},
     {"from": "CHI", "to": "SEA", "route_name": "Chicago to Seattle"}
 ]
 
 def scrape_all_routes():
-    target_dt = datetime.now(timezone.utc) + timedelta(days=10)
+    # Aaj se 20 din baad ki tareekh (December 2026 jo calendar mein pehle hi dikhti hai)
+    target_dt = datetime.now(timezone.utc) + timedelta(days=20)
     travel_date = target_dt.strftime("%m/%d/%Y")
-    day_str = str(target_dt.day)
+    # Exact aria-label format: e.g. "Monday, December 14, 2026"
+    exact_aria_label = f"{target_dt.strftime('%A')}, {target_dt.strftime('%B')} {target_dt.day}, {target_dt.year}"
 
     results_list = []
 
@@ -27,7 +30,7 @@ def scrape_all_routes():
 
         for route in ROUTES:
             try:
-                page.goto("https://www.amtrak.com/home", timeout=60000, wait_until="domcontentloaded")
+                page.goto("https://amtrak.com", timeout=60000, wait_until="domcontentloaded")
                 page.wait_for_timeout(4000)
 
                 cookie_btn = page.locator("#onetrust-accept-btn-handler")
@@ -51,28 +54,24 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Depart Date ke label par click karke calendar popup kholein
+                # 3. Depart Date label par click karke calendar kholein
                 depart_label = page.locator('label:visible:has-text("Depart Date")').first
                 depart_label.click()
-                page.wait_for_timeout(2000)
-
-                # JavaScript se calendar ke andar enabled tareekh par click karein
-                clicked_date = page.evaluate(f"""() => {{
-                    const cells = Array.from(document.querySelectorAll('td, button, span, div'))
-                        .filter(el => el.innerText && el.innerText.trim() === '{day_str}' && el.offsetParent !== null);
-                    for (const el of cells) {{
-                        const parent = el.closest('td, button');
-                        if (parent && !parent.disabled && !parent.className.includes('disabled') && parent.getAttribute('aria-disabled') !== 'true') {{
-                            parent.click();
-                            return true;
-                        }}
-                    }}
-                    return false;
-                }}""")
                 page.wait_for_timeout(1500)
 
+                # Exact ngb-dp-day cell par click karein
+                day_cell = page.locator(f'div.ngb-dp-day[aria-label="{exact_aria_label}"]:visible').first
+                day_cell.click()
+                page.wait_for_timeout(1000)
+
+                # Agar calendar mein "Done" button ho to click karein
+                done_btn = page.locator('button:visible:has-text("Done")').first
+                if done_btn.is_visible():
+                    done_btn.click()
+                    page.wait_for_timeout(1000)
+
                 # 4. Find Trains button click karein
-                find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
+                find_btn = page.locator('button[amt-auto-test-id="fare-finder-findtrains-button"]:visible').first
                 find_btn.click()
 
                 # Results page (/tickets/departure.html) load hone ka wait karein
@@ -109,7 +108,6 @@ def scrape_all_routes():
                     "to": route["to"],
                     "route_name": route["route_name"],
                     "travel_date": travel_date,
-                    "calendar_clicked": clicked_date,
                     "lowest_fare": lowest,
                     "fares_breakdown": {
                         "coach": extracted_fares["coach"] or "Sold Out / N/A",
