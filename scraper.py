@@ -11,7 +11,6 @@ ROUTES = [
 def scrape_all_routes():
     target_dt = datetime.now(timezone.utc) + timedelta(days=10)
     travel_date = target_dt.strftime("%m/%d/%Y")
-    day_number = str(target_dt.day)
 
     results_list = []
 
@@ -36,46 +35,40 @@ def scrape_all_routes():
                     cookie_btn.click()
                     page.wait_for_timeout(1000)
 
-                # 1. From Station type karein aur dropdown ke pehle option par click karein
+                # 1. From Station select karein
                 from_input = page.locator('input[aria-label="From"]:visible').first
-                from_input.click()
+                from_input.click(force=True)
                 from_input.press_sequentially(route["from"], delay=150)
                 page.wait_for_timeout(2000)
-                page.locator(f'.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click()
+                page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1000)
 
-                # 2. To Station type karein aur dropdown ke pehle option par click karein
+                # 2. To Station select karein
                 to_input = page.locator('input[aria-label="To"]:visible').first
-                to_input.click()
+                to_input.click(force=True)
                 to_input.press_sequentially(route["to"], delay=150)
                 page.wait_for_timeout(2000)
-                page.locator(f'.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click()
+                page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Date select karein
-                date_input = page.locator('input[data-julie="departdisplay_booking_oneway"]:visible, input[placeholder="MM/DD/YYYY"]:visible').first
-                date_input.click()
-                page.wait_for_timeout(1500)
-
-                cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}")').first
-                if cal_day.is_visible():
-                    cal_day.click()
-                else:
-                    date_input.fill(travel_date)
-                    page.keyboard.press("Enter")
-
+                # 3. Date box mein direct MM/DD/YYYY type karein (force=True ke saath)
+                date_input = page.locator('input[amt-auto-test-id="fare-finder-depart-date-oneway"]:visible').first
+                date_input.click(force=True)
+                date_input.fill(travel_date)
+                page.keyboard.press("Tab")
                 page.wait_for_timeout(1000)
 
                 # 4. Find Trains click karein
                 find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
-                find_btn.click()
+                find_btn.click(force=True)
 
+                # Search results page load hone ka wait karein
                 page.wait_for_timeout(12000)
 
                 body_text = page.inner_text("body")
                 raw_prices = re.findall(r'\$\d+(?:,\d{3})*', body_text)
                 valid_prices = [p for p in dict.fromkeys(raw_prices) if p != "$0"]
-                lowest_price = valid_prices[0] if valid_prices else "Sold Out"
+                lowest_price = valid_prices if valid_prices else "Sold Out"
 
                 results_list.append({
                     "from": route["from"],
