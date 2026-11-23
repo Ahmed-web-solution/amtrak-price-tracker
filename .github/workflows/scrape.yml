@@ -1,0 +1,35 @@
+name: Amtrak Price Scraper
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright playwright-stealth
+          playwright install chromium
+
+      - name: Run Scraper
+        run: python scraper.py
+
+      - name: Commit and push updated JSON
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add prices.json
+          git commit -m "Update Amtrak prices" || exit 0
+          git push
