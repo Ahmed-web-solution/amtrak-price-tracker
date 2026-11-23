@@ -1,4 +1,428 @@
 {
-    "status": "error",
-    "message": "Page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://amtrak.com/\", waiting until \"networkidle\"\n"
+    "status": "success",
+    "page_title": "Train Tickets, Schedules & Routes | Amtrak",
+    "inputs_found": [
+        {
+            "id": "am-form-field-control-12",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "departure station"
+        },
+        {
+            "id": "am-form-field-control-14",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "To staion"
+        },
+        {
+            "id": "res-number",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "Reservation/Ticket Number"
+        },
+        {
+            "id": "",
+            "name": "stationSearchCode",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "inputStationRouteSearch",
+            "placeholder": " ",
+            "ariaLabel": "Please enter station name or code"
+        },
+        {
+            "id": "am-form-field-control-16",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "From station"
+        },
+        {
+            "id": "am-form-field-control-18",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "To station"
+        },
+        {
+            "id": "",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-20",
+            "name": "",
+            "placeholder": "MM/DD/YYYY",
+            "ariaLabel": "Departure Date in MM/DD/YYYY format"
+        },
+        {
+            "id": "",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-22",
+            "name": "",
+            "placeholder": "MM/DD/YYYY",
+            "ariaLabel": "Departure Date in MM/DD/YYYY format"
+        },
+        {
+            "id": "",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-24",
+            "name": "",
+            "placeholder": "Add Range?",
+            "ariaLabel": "Return Date in MM/DD/YYYY format"
+        },
+        {
+            "id": "askJulie",
+            "name": "",
+            "placeholder": "What can I help you with?",
+            "ariaLabel": null
+        },
+        {
+            "id": "redeemPoints-checkbox",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-0",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "From"
+        },
+        {
+            "id": "am-form-field-control-2",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": "To"
+        },
+        {
+            "id": "",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-4",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-6",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "am-form-field-control-8",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "needAssistance",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "email-OptIn_siginInRegister",
+            "name": "email-OptIn_siginInRegister'",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "signin-radio",
+            "name": "switch-signin-signup",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "username",
+            "placeholder": " ",
+            "ariaLabel": "Email or Guest Rewards # "
+        },
+        {
+            "id": "",
+            "name": "password",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "tncVersionNumber_siginIn",
+            "name": "_cmstcversionnumber_login",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "signup-radio",
+            "name": "switch-signin-signup",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "firstName",
+            "placeholder": " ",
+            "ariaLabel": "First Name "
+        },
+        {
+            "id": "",
+            "name": "lastName",
+            "placeholder": " ",
+            "ariaLabel": "Last Name "
+        },
+        {
+            "id": "",
+            "name": "password",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "confirmPassword",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "emailAddress",
+            "placeholder": " ",
+            "ariaLabel": "Email Address "
+        },
+        {
+            "id": "",
+            "name": "emailCommunicationOptin",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "emailCommunicationOptin",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "enrollmentSourceCode",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "_cmstcversionnumber_register",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "subscriber",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "_cmsemailcommunication",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "email-OptIn_siginInRegister",
+            "name": "email-OptIn_siginInRegister'",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "",
+            "name": "_name",
+            "placeholder": " ",
+            "ariaLabel": "Email or Member # "
+        },
+        {
+            "id": "",
+            "name": "question",
+            "placeholder": " ",
+            "ariaLabel": "Forgot Password Step "
+        },
+        {
+            "id": "",
+            "name": "question",
+            "placeholder": " ",
+            "ariaLabel": "Forgot Password Step "
+        },
+        {
+            "id": "",
+            "name": "question",
+            "placeholder": " ",
+            "ariaLabel": "Forgot Password Step "
+        },
+        {
+            "id": "",
+            "name": "question",
+            "placeholder": " ",
+            "ariaLabel": "Forgot Password Step "
+        },
+        {
+            "id": "",
+            "name": "newPassword",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "ot-group-id-C0004",
+            "name": "ot-group-id-C0004",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "ot-group-id-C0002",
+            "name": "ot-group-id-C0002",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "ot-group-id-C0003",
+            "name": "ot-group-id-C0003",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "vendor-search-handler",
+            "name": "vendor-search-handler",
+            "placeholder": "Search\u2026",
+            "ariaLabel": "Cookie list search"
+        },
+        {
+            "id": "chkbox-id",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "select-all-hosts-groups-handler",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "select-all-vendor-groups-handler",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        },
+        {
+            "id": "select-all-vendor-leg-handler",
+            "name": "",
+            "placeholder": "",
+            "ariaLabel": null
+        }
+    ],
+    "json_apis_called": [
+        {
+            "url": "https://www.amtrak.com/libs/granite/csrf/token.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/G8CZgR/05yP/DF/LuMT/EIuI7jJVC3A/f7NuQzm2cur4ftur/DS92/bhxndEVr/Vls",
+            "status": 201
+        },
+        {
+            "url": "https://www.amtrak.com/services/staticmappingjson",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/content/amtrak/en-us/reference-data/wsdot-stations-api.jsondata.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/content/amtrak/en-us/reference-data/wsdot-stations-api.jsondata.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/services/data.popularstations.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/services/data.stations.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/services/globalerrorjson",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/services/contentService.stationsinfo.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/services/routes-list.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/services/data.stations.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/content/amtrak/en-us/home.alertsService.emergency-alerts.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/content/amtrak/en-us/home.alertsService.homepage-alerts.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/content/amtrak/en-us/api/terms-and-conditions/version.model.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/content/amtrak/en-us/api/terms-and-conditions/version.model.json",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/G8CZgR/05yP/DF/LuMT/EIuI7jJVC3A/f7NuQzm2cur4ftur/DS92/bhxndEVr/Vls",
+            "status": 201
+        },
+        {
+            "url": "https://www.amtrak.com/G8CZgR/05yP/DF/LuMT/EIuI7jJVC3A/rXNuQzV3cu/D1Z6/BVMRSWZM/aFh3AQ",
+            "status": 200
+        },
+        {
+            "url": "https://www.amtrak.com/G8CZgR/05yP/DF/LuMT/EIuI7jJVC3A/f7NuQzm2cur4ftur/DS92/bhxndEVr/Vls",
+            "status": 201
+        },
+        {
+            "url": "https://www.googleadservices.com/pagead/conversion/999695143/?random=1795467599484&cv=11&fst=1795467599484&fmt=7&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45be6bh1v894348192za200zb9237309910zd9237309910xecxf1&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118131809~120213116~120385422~120469145~120469153~121246026~121246034&u_w=1280&u_h=800&url=https%3A%2F%2Fwww.amtrak.com%2Fhome&rcb=3&gtm_ee=1&frm=0&tiba=Train%20Tickets%2C%20Schedules%20%26%20Routes%20%7C%20Amtrak&did=dYWJhMj&gdid=dYWJhMj&npa=0&pscdl=noapi&auid=1999486072.1795467599&label=k0lGCKf1i8AaEKfG2NwD&hn=www.googleadservices.com&uaa=x86&uab=64&uafvl=HeadlessChrome%3B159.0.8154.6%7CNot%252FA)Brand%3B8.0.0.0%7CChromium%3B159.0.8154.6&uamb=0&uam=&uap=Windows&uapv=10.0&uaw=0&ec_mode=a&oid=GG_1137741736.1795467599&oidsrc=3&ecsid2=1458779550.1795467599&_tu=ABA&gcl_ctr=2~0~0~0&data=event%3Dpage_view&category=acrcp_v1_512&em=tv.1&emd=tvd.1&ept=5",
+            "status": 200
+        },
+        {
+            "url": "https://www.googleadservices.com/pagead/conversion/999695143/?random=1795467599495&cv=11&fst=1795467599495&fmt=7&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45be6bh1v894348192za200zb9237309910zd9237309910xecxf1&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118131809~120213116~120385422~120469145~120469153~121246026~121246034&u_w=1280&u_h=800&url=https%3A%2F%2Fwww.amtrak.com%2Fhome&rcb=3&gtm_ee=1&frm=0&tiba=Train%20Tickets%2C%20Schedules%20%26%20Routes%20%7C%20Amtrak&did=dYWJhMj&gdid=dYWJhMj&npa=0&pscdl=noapi&auid=1999486072.1795467599&label=k0lGCKf1i8AaEKfG2NwD&hn=www.googleadservices.com&uaa=x86&uab=64&uafvl=HeadlessChrome%3B159.0.8154.6%7CNot%252FA)Brand%3B8.0.0.0%7CChromium%3B159.0.8154.6&uamb=0&uam=&uap=Windows&uapv=10.0&uaw=0&ec_mode=a&oid=GG_518675131.1795467599&oidsrc=3&ecsid2=1458779550.1795467599&_tu=ABA&gcl_ctr=3~0~0~0&data=event%3Dpage_view&category=acrcp_v1_512&em=tv.1&emd=tvd.1&ept=5",
+            "status": 200
+        },
+        {
+            "url": "https://www.googleadservices.com/pagead/conversion/999695143/?random=1795467599470&cv=11&fst=1795467599470&fmt=7&bg=ffffff&guid=ON&async=1&en=page_view&gtm=45be6bh1v894348192za208zb9237309910zd9237309910xecxf1&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~118131809~120213116~120385422~120469145~120469153~121246026~121246034&u_w=1280&u_h=800&url=https%3A%2F%2Fwww.amtrak.com%2Fhome&rcb=3&gtm_ee=1&frm=0&tiba=Train%20Tickets%2C%20Schedules%20%26%20Routes%20%7C%20Amtrak&did=dYWJhMj&gdid=dYWJhMj&npa=0&pscdl=noapi&auid=1999486072.1795467599&label=k0lGCKf1i8AaEKfG2NwD&hn=www.googleadservices.com&uaa=x86&uab=64&uafvl=HeadlessChrome%3B159.0.8154.6%7CNot%252FA)Brand%3B8.0.0.0%7CChromium%3B159.0.8154.6&uamb=0&uam=&uap=Windows&uapv=10.0&uaw=0&ec_mode=a&oid=GG_1163413314.1795467599&oidsrc=3&ecsid2=1458779550.1795467599&_tu=ABA&gcl_ctr=1~0~0~0&data=event%3Dgtag.config&category=acrcp_v1_512&em=tv.1&emd=tvd.1&ept=5",
+            "status": 200
+        }
+    ]
 }
