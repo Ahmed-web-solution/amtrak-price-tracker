@@ -3,14 +3,13 @@ import re
 from datetime import datetime, timedelta, timezone
 from playwright.sync_api import sync_playwright
 
-# Yahan aap jitne marzi stations/routes add kar sakte hain:
 ROUTES = [
     {"from": "NYP", "to": "LAX", "route_name": "New York to Los Angeles"},
     {"from": "CHI", "to": "SEA", "route_name": "Chicago to Seattle"}
 ]
 
 def scrape_all_routes():
-    # Aaj se 21 din baad ki tareekh taake seats available hon aur "Sold Out" na aaye
+    # Aaj se 21 din baad ki tareekh
     target_dt = datetime.now(timezone.utc) + timedelta(days=21)
     travel_date = target_dt.strftime("%m/%d/%Y")
 
@@ -60,32 +59,25 @@ def scrape_all_routes():
                 page.keyboard.press("Tab")
                 page.wait_for_timeout(1000)
 
-                # 4. Find Trains
+                # 4. Find Trains click karein
                 find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
                 find_btn.click(force=True)
 
-                # Jab tak actual search results page (/tickets/departure.html) load na ho, wait karein
-                page.wait_for_url("**/tickets/departure.html**", timeout=30000)
-                page.wait_for_timeout(8000)
+                # Angular SPA navigation aur fares load hone ka wait (bina load event ke)
+                page.wait_for_timeout(15000)
 
-                # Sirf search result cards ke andar se Coach, Business aur Private Room fares nikalein
+                # Screen text se Coach, Business, aur Private Rooms fares nikalein
                 extracted_fares = page.evaluate("""() => {
-                    const results = [];
-                    // Har train row / search result card ko check karein
-                    const cards = document.querySelectorAll('[class*="search-results"], [class*="journey-card"], .am-card, app-train-route');
-                    const textSource = cards.length > 0 
-                        ? Array.from(cards).map(c => c.innerText).join('\\n')
-                        : document.body.innerText;
+                    const textSource = document.body.innerText;
 
-                    // Sirf "Coach from $XXX", "Business from $XXX", "Private Rooms from $XXX" pattern match karein
                     const coachMatch = textSource.match(/Coach\\s*(?:from)?\\s*(\\$[0-9,]+)/i);
                     const businessMatch = textSource.match(/Business\\s*(?:from)?\\s*(\\$[0-9,]+)/i);
                     const roomMatch = textSource.match(/Private Rooms?\\s*(?:from)?\\s*(\\$[0-9,]+)/i);
 
-                    // Saare valid train fares (jo $0 na hon)
-                    const allMatches = [...textSource.matchAll(/(?:Coach|Business|Private Rooms?)\\s*(?:from)?\\s*(\\$[0-9,]+)/gi)].map(m => m[1]);
+                    const allMatches = [...textSource.matchAll(/(?:Coach|Business|Private Rooms?)\\s*(?:from)?\\s*(\\$[0-9,]+)/gi)].map(m => m);
 
                     return {
+                        current_url: window.location.href,
                         coach: coachMatch ? coachMatch : null,
                         business: businessMatch ? businessMatch : null,
                         private_room: roomMatch ? roomMatch : null,
@@ -93,7 +85,6 @@ def scrape_all_routes():
                     };
                 }""")
 
-                # Lowest valid fare decide karein
                 lowest = (
                     extracted_fares["coach"]
                     or extracted_fares["business"]
@@ -112,6 +103,7 @@ def scrape_all_routes():
                         "business": extracted_fares["business"] or "Not Offered / Sold Out",
                         "private_room": extracted_fares["private_room"] or "Sold Out / N/A"
                     },
+                    "debug_url": extracted_fares["current_url"],
                     "status": "success"
                 })
 
