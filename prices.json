@@ -1,6 +1,6 @@
 {
     "status": "error",
-    "version": "v3_visible",
-    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[placeholder=\\\"MM/DD/YYYY\\\"]:visible\").first\n",
+    "version": "v4_dropdown",
+    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"mat-option:visible, [role=\\\"option\\\"]:visible\").first\n",
     "current_url": "https://www.amtrak.com/home"
 }
