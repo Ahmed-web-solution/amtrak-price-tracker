@@ -2,19 +2,12 @@ import json
 from datetime import datetime, timedelta, timezone
 from playwright.sync_api import sync_playwright
 
-# Yahan aap jitne marzi stations/routes add kar sakte hain:
 ROUTES = [
     {"from": "NYP", "to": "LAX", "route_name": "New York to Los Angeles"},
     {"from": "CHI", "to": "SEA", "route_name": "Chicago to Seattle"}
 ]
 
 def scrape_all_routes():
-    # Aaj se 20 din baad ki tareekh (December 2026 jo calendar mein pehle hi dikhti hai)
-    target_dt = datetime.now(timezone.utc) + timedelta(days=20)
-    travel_date = target_dt.strftime("%m/%d/%Y")
-    # Exact aria-label format: e.g. "Monday, December 14, 2026"
-    exact_aria_label = f"{target_dt.strftime('%A')}, {target_dt.strftime('%B')} {target_dt.day}, {target_dt.year}"
-
     results_list = []
 
     with sync_playwright() as p:
@@ -38,7 +31,7 @@ def scrape_all_routes():
                     cookie_btn.click()
                     page.wait_for_timeout(1000)
 
-                # 1. From Station select karein
+                # 1. From Station
                 from_input = page.locator('input[aria-label="From"]:visible').first
                 from_input.click(force=True)
                 from_input.press_sequentially(route["from"], delay=150)
@@ -46,7 +39,7 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1000)
 
-                # 2. To Station select karein
+                # 2. To Station
                 to_input = page.locator('input[aria-label="To"]:visible').first
                 to_input.click(force=True)
                 to_input.press_sequentially(route["to"], delay=150)
@@ -54,17 +47,18 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Depart Date label par click karke calendar kholein
+                # 3. Calendar kholein aur 15th available ngb-dp-day par click karein
                 depart_label = page.locator('label:visible:has-text("Depart Date")').first
                 depart_label.click()
                 page.wait_for_timeout(1500)
 
-                # Exact ngb-dp-day cell par click karein
-                day_cell = page.locator(f'div.ngb-dp-day[aria-label="{exact_aria_label}"]:visible').first
-                day_cell.click()
+                available_days = page.locator('div.ngb-dp-day[aria-disabled="false"]:visible')
+                selected_cell = available_days.nth(15)
+                selected_date_label = selected_cell.get_attribute("aria-label") or "Next Available Date"
+                selected_cell.click()
                 page.wait_for_timeout(1000)
 
-                # Agar calendar mein "Done" button ho to click karein
+                # Agar calendar mein Done button ho to click karein
                 done_btn = page.locator('button:visible:has-text("Done")').first
                 if done_btn.is_visible():
                     done_btn.click()
@@ -74,7 +68,7 @@ def scrape_all_routes():
                 find_btn = page.locator('button[amt-auto-test-id="fare-finder-findtrains-button"]:visible').first
                 find_btn.click()
 
-                # Results page (/tickets/departure.html) load hone ka wait karein
+                # Search results page (/tickets/departure.html) load hone ka wait karein
                 page.wait_for_timeout(15000)
 
                 # Screen text se Coach, Business, aur Private Rooms fares nikalein
@@ -89,9 +83,9 @@ def scrape_all_routes():
 
                     return {
                         current_url: window.location.href,
-                        coach: coachMatch ? coachMatch : null,
-                        business: businessMatch ? businessMatch : null,
-                        private_room: roomMatch ? roomMatch : null,
+                        coach: coachMatch ? coachMatch[1] : null,
+                        business: businessMatch ? businessMatch[1] : null,
+                        private_room: roomMatch ? roomMatch[1] : null,
                         all_matched_fares: [...new Set(allMatches)]
                     };
                 }""")
@@ -100,14 +94,14 @@ def scrape_all_routes():
                     extracted_fares["coach"]
                     or extracted_fares["business"]
                     or extracted_fares["private_room"]
-                    or (extracted_fares["all_matched_fares"] if extracted_fares["all_matched_fares"] else "Sold Out")
+                    or (extracted_fares["all_matched_fares"][0] if extracted_fares["all_matched_fares"] else "Sold Out")
                 )
 
                 results_list.append({
                     "from": route["from"],
                     "to": route["to"],
                     "route_name": route["route_name"],
-                    "travel_date": travel_date,
+                    "travel_date": selected_date_label,
                     "lowest_fare": lowest,
                     "fares_breakdown": {
                         "coach": extracted_fares["coach"] or "Sold Out / N/A",
