@@ -3,11 +3,19 @@ import re
 from datetime import datetime, timedelta, timezone
 from playwright.sync_api import sync_playwright
 
-def test_real_search():
-    fare_apis = []
-    target_dt = datetime.now(timezone.utc) + timedelta(days=7)
+# Yahan aap jitne marzi stations/routes add kar sakte hain:
+ROUTES = [
+    {"from": "NYP", "to": "LAX", "route_name": "New York to Los Angeles"},
+    {"from": "CHI", "to": "SEA", "route_name": "Chicago to Seattle"}
+]
+
+def scrape_all_routes():
+    # Aaj se 10 din baad ki tareekh (taake sold-out rush se bacha ja sake)
+    target_dt = datetime.now(timezone.utc) + timedelta(days=10)
     travel_date = target_dt.strftime("%m/%d/%Y")
     day_number = str(target_dt.day)
+
+    results_list = []
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -20,94 +28,90 @@ def test_real_search():
         )
         page = context.new_page()
 
-        def handle_response(response):
-            if "amtrak.com" in response.url and "json" in response.headers.get("content-type", ""):
-                if any(k in response.url.lower() for k in ["travel", "fare", "schedule", "train", "offer", "service", "dotcom"]):
-                    try:
-                        fare_apis.append({
-                            "url": response.url,
-                            "status": response.status,
-                            "body_preview": str(response.json())[:1500]
-                        })
-                    except:
-                        pass
+        for route in ROUTES:
+            try:
+                page.goto("https://amtrak.com", timeout=60000, wait_until="domcontentloaded")
+                page.wait_for_timeout(4000)
 
-        page.on("response", handle_response)
+                # Cookie popup close karein (agar nazar aaye)
+                cookie_btn = page.locator("#onetrust-accept-btn-handler")
+                if cookie_btn.is_visible():
+                    cookie_btn.click()
+                    page.wait_for_timeout(1000)
 
-        try:
-            page.goto("https://www.amtrak.com/home", timeout=60000, wait_until="domcontentloaded")
-            page.wait_for_timeout(5000)
-
-            # Cookie popup close karein
-            cookie_btn = page.locator("#onetrust-accept-btn-handler")
-            if cookie_btn.is_visible():
-                cookie_btn.click()
+                # 1. From Station select karein
+                from_input = page.locator('input[aria-label="From"]:visible').first
+                from_input.click()
+                from_input.fill(route["from"])
+                page.wait_for_timeout(2000)
+                page.locator(f'button:visible:has-text("({route["from"]})"), li:visible:has-text("({route["from"]})")').first.click()
                 page.wait_for_timeout(1000)
 
-            # 1. From Station: NYP likhein aur "(NYP)" wale dropdown item par click karein
-            from_input = page.locator('input[aria-label="From"]:visible').first
-            from_input.click()
-            from_input.fill("NYP")
-            page.wait_for_timeout(2000)
-            page.locator('button:visible:has-text("(NYP)"), li:visible:has-text("(NYP)"), a:visible:has-text("(NYP)")').first.click()
-            page.wait_for_timeout(1000)
+                # 2. To Station select karein
+                to_input = page.locator('input[aria-label="To"]:visible').first
+                to_input.click()
+                to_input.fill(route["to"])
+                page.wait_for_timeout(2000)
+                page.locator(f'button:visible:has-text("({route["to"]})"), li:visible:has-text("({route["to"]})")').first.click()
+                page.wait_for_timeout(1500)
 
-            # 2. To Station: LAX likhein aur "(LAX)" wale dropdown item par click karein
-            to_input = page.locator('input[aria-label="To"]:visible').first
-            to_input.click()
-            to_input.fill("LAX")
-            page.wait_for_timeout(2000)
-            page.locator('button:visible:has-text("(LAX)"), li:visible:has-text("(LAX)"), a:visible:has-text("(LAX)")').first.click()
-            page.wait_for_timeout(1500)
+                # 3. Date select karein
+                date_input = page.locator('input[data-julie="departdisplay_booking_oneway"]:visible, input[placeholder="MM/DD/YYYY"]:visible').first
+                date_input.click()
+                page.wait_for_timeout(1500)
 
-            # 3. Date box click karein
-            date_input = page.locator('input[data-julie="departdisplay_booking_oneway"]:visible, input[placeholder="MM/DD/YYYY"]:visible').first
-            date_input.click()
-            page.wait_for_timeout(1500)
+                cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}")').first
+                if cal_day.is_visible():
+                    cal_day.click()
+                else:
+                    date_input.fill(travel_date)
+                    page.keyboard.press("Enter")
 
-            # Calendar mein target day click karein
-            cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}")').first
-            if cal_day.is_visible():
-                cal_day.click()
-            else:
-                date_input.fill(travel_date)
-                page.keyboard.press("Enter")
+                page.wait_for_timeout(1000)
 
-            page.wait_for_timeout(1000)
+                # 4. Find Trains click karein
+                find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
+                find_btn.click()
 
-            # 4. Find Trains button click karein
-            find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
-            find_btn.click()
+                # Results page (/tickets/departure.html) load hone ka wait
+                page.wait_for_timeout(12000)
 
-            # Search results aur prices load hone ka wait karein
-            page.wait_for_timeout(12000)
+                # Screen se saare dollar fares ($482, $702, etc.) nikalein
+                body_text = page.inner_text("body")
+                raw_prices = re.findall(r'\$\d+(?:,\d{3})*', body_text)
+                
+                # $0 (cart icon) ko hata kar unique prices sort karein
+                valid_prices = [p for p in dict.fromkeys(raw_prices) if p != "$0"]
+                lowest_price = valid_prices[0] if valid_prices else "Sold Out"
 
-            body_text = page.inner_text("body")
-            prices_found = re.findall(r'\$\d+(?:,\d{3})*(?:\.\d{2})?', body_text)
+                results_list.append({
+                    "from": route["from"],
+                    "to": route["to"],
+                    "route_name": route["route_name"],
+                    "travel_date": travel_date,
+                    "lowest_fare": lowest_price,
+                    "all_fares_found": valid_prices[:8],
+                    "status": "success"
+                })
 
-            result = {
-                "status": "success",
-                "version": "v5_station_code",
-                "current_url": page.url,
-                "route": "NYP to LAX",
-                "travel_date": travel_date,
-                "prices_on_screen": list(dict.fromkeys(prices_found))[:15],
-                "fare_apis_captured": fare_apis,
-                "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-            }
+            except Exception as e:
+                results_list.append({
+                    "from": route["from"],
+                    "to": route["to"],
+                    "route_name": route["route_name"],
+                    "status": "error",
+                    "error": str(e)
+                })
 
-        except Exception as e:
-            result = {
-                "status": "error",
-                "version": "v5_station_code",
-                "message": str(e),
-                "current_url": page.url
-            }
-        finally:
-            browser.close()
+        browser.close()
 
-        with open("prices.json", "w") as f:
-            json.dump(result, f, indent=4)
+    output = {
+        "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "routes": results_list
+    }
+
+    with open("prices.json", "w") as f:
+        json.dump(output, f, indent=4)
 
 if __name__ == "__main__":
-    test_real_search()
+    scrape_all_routes()
