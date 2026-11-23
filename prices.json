@@ -1,19 +1,33 @@
 {
-    "last_updated": "2026-11-23 22:52:29 UTC",
+    "last_updated": "2026-11-23 22:58:00 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"div.ngb-dp-day[aria-disabled=\\\"false\\\"]:visible\").nth(15)\n    - locator resolved to <div tabindex=\"-1\" role=\"gridcell\" aria-disabled=\"false\" aria-selected=\"false\" aria-label=\"Tuesday, December 8, 2026\" class=\"ngb-dp-day hidden ng-star-inserted\">\u2026</div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div role=\"row\" class=\"ngb-dp-week ng-star-inserted\">\u2026</div> intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div role=\"row\" class=\"ngb-dp-week ng-star-inserted\">\u2026</div> intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    58 \u00d7 waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <div role=\"row\" class=\"ngb-dp-week ng-star-inserted\">\u2026</div> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n"
+            "travel_date": "Thursday, December 3, 2026",
+            "lowest_fare": "Sold Out",
+            "fares_breakdown": {
+                "coach": "Sold Out / N/A",
+                "business": "Not Offered / Sold Out",
+                "private_room": "Sold Out / N/A"
+            },
+            "debug_url": "https://www.amtrak.com/home",
+            "status": "success"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
-            "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"div.ngb-dp-day[aria-disabled=\\\"false\\\"]:visible\").nth(15)\n    - locator resolved to <div tabindex=\"-1\" role=\"gridcell\" aria-disabled=\"false\" aria-selected=\"false\" aria-label=\"Tuesday, December 8, 2026\" class=\"ngb-dp-day hidden ng-star-inserted\">\u2026</div>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div role=\"row\" class=\"ngb-dp-week ng-star-inserted\">\u2026</div> intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div role=\"row\" class=\"ngb-dp-week ng-star-inserted\">\u2026</div> intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    58 \u00d7 waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <div role=\"row\" class=\"ngb-dp-week ng-star-inserted\">\u2026</div> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n"
+            "travel_date": "Thursday, December 3, 2026",
+            "lowest_fare": "Sold Out",
+            "fares_breakdown": {
+                "coach": "Sold Out / N/A",
+                "business": "Not Offered / Sold Out",
+                "private_room": "Sold Out / N/A"
+            },
+            "debug_url": "https://www.amtrak.com/home",
+            "status": "success"
         }
     ]
 }
