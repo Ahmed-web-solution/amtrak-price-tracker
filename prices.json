@@ -1,19 +1,33 @@
 {
-    "last_updated": "2026-11-23 22:36:11 UTC",
+    "last_updated": "2026-11-23 22:44:17 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:visible:has-text(\\\"Find Trains\\\"), button:visible:has-text(\\\"FIND TRAINS\\\")\").first\n    - locator resolved to <button ambtn=\"\" fullwidth=\"true\" btnstyle=\"primary\" aria-disabled=\"true\" data-julie=\"findtrains\" aria-label=\"FIND TRAINS\" _ngcontent-ng-c2196468565=\"\" data-di-id=\"di-id-20da5771-7c136e45\" amt-auto-test-id=\"fare-finder-findtrains-button\" class=\"search-btn px-0 am-btn am-btn--primary ng-star-inserted\"> FIND TRAINS </button>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n      - waiting 100ms\n    58 \u00d7 waiting for element to be visible, enabled and stable\n       - element is not enabled\n     - retrying click action\n       - waiting 500ms\n"
+            "travel_date": "12/13/2026",
+            "lowest_fare": "Sold Out",
+            "fares_breakdown": {
+                "coach": "Sold Out / N/A",
+                "business": "Not Offered / Sold Out",
+                "private_room": "Sold Out / N/A"
+            },
+            "debug_url": "https://www.amtrak.com/home",
+            "status": "success"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
-            "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:visible:has-text(\\\"Find Trains\\\"), button:visible:has-text(\\\"FIND TRAINS\\\")\").first\n    - locator resolved to <button ambtn=\"\" fullwidth=\"true\" btnstyle=\"primary\" aria-disabled=\"true\" data-julie=\"findtrains\" aria-label=\"FIND TRAINS\" _ngcontent-ng-c2196468565=\"\" data-di-id=\"di-id-20da5771-7c136e45\" amt-auto-test-id=\"fare-finder-findtrains-button\" class=\"search-btn px-0 am-btn am-btn--primary ng-star-inserted\"> FIND TRAINS </button>\n  - attempting click action\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n    - waiting 20ms\n    2 \u00d7 waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n      - waiting 100ms\n    58 \u00d7 waiting for element to be visible, enabled and stable\n       - element is not enabled\n     - retrying click action\n       - waiting 500ms\n"
+            "travel_date": "12/13/2026",
+            "lowest_fare": "Sold Out",
+            "fares_breakdown": {
+                "coach": "Sold Out / N/A",
+                "business": "Not Offered / Sold Out",
+                "private_room": "Sold Out / N/A"
+            },
+            "debug_url": "https://www.amtrak.com/home",
+            "status": "success"
         }
     ]
 }
