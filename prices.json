@@ -1,5 +1,6 @@
 {
     "status": "error",
-    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[aria-label*=\\\"Departure Date\\\"]:visible\").first\n",
+    "version": "v3_visible",
+    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[placeholder=\\\"MM/DD/YYYY\\\"]:visible\").first\n",
     "current_url": "https://www.amtrak.com/home"
 }
