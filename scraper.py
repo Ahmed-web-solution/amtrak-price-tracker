@@ -38,32 +38,34 @@ def test_real_search():
             page.goto("https://www.amtrak.com/home", timeout=60000, wait_until="domcontentloaded")
             page.wait_for_timeout(5000)
 
+            # Cookie popup close karein
             cookie_btn = page.locator("#onetrust-accept-btn-handler")
             if cookie_btn.is_visible():
                 cookie_btn.click()
                 page.wait_for_timeout(1000)
 
-            # 1. From Station type karein aur dropdown option click karein
+            # 1. From Station: NYP likhein aur "(NYP)" wale dropdown item par click karein
             from_input = page.locator('input[aria-label="From"]:visible').first
             from_input.click()
-            from_input.type("NYP", delay=150)
+            from_input.fill("NYP")
             page.wait_for_timeout(2000)
-            page.locator('mat-option:visible, [role="option"]:visible').first.click()
+            page.locator('button:visible:has-text("(NYP)"), li:visible:has-text("(NYP)"), a:visible:has-text("(NYP)")').first.click()
             page.wait_for_timeout(1000)
 
-            # 2. To Station type karein aur dropdown option click karein
+            # 2. To Station: LAX likhein aur "(LAX)" wale dropdown item par click karein
             to_input = page.locator('input[aria-label="To"]:visible').first
             to_input.click()
-            to_input.type("LAX", delay=150)
+            to_input.fill("LAX")
             page.wait_for_timeout(2000)
-            page.locator('mat-option:visible, [role="option"]:visible').first.click()
+            page.locator('button:visible:has-text("(LAX)"), li:visible:has-text("(LAX)"), a:visible:has-text("(LAX)")').first.click()
             page.wait_for_timeout(1500)
 
-            # 3. Ab date box khul chuka hoga, us par click karein
-            date_input = page.locator('input[placeholder="MM/DD/YYYY"]:visible, input[aria-label*="Depart"]:visible').first
+            # 3. Date box click karein
+            date_input = page.locator('input[data-julie="departdisplay_booking_oneway"]:visible, input[placeholder="MM/DD/YYYY"]:visible').first
             date_input.click()
-            page.wait_for_timeout(1000)
+            page.wait_for_timeout(1500)
 
+            # Calendar mein target day click karein
             cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}")').first
             if cal_day.is_visible():
                 cal_day.click()
@@ -85,7 +87,7 @@ def test_real_search():
 
             result = {
                 "status": "success",
-                "version": "v4_dropdown",
+                "version": "v5_station_code",
                 "current_url": page.url,
                 "route": "NYP to LAX",
                 "travel_date": travel_date,
@@ -97,7 +99,7 @@ def test_real_search():
         except Exception as e:
             result = {
                 "status": "error",
-                "version": "v4_dropdown",
+                "version": "v5_station_code",
                 "message": str(e),
                 "current_url": page.url
             }
