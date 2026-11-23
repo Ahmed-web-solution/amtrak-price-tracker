@@ -1,7 +1,4 @@
 {
-    "status": "success",
-    "page_title": "Train Tickets, Schedules & Routes | Amtrak",
-    "route": "NYP to LAX",
-    "price": "$250",
-    "last_updated": "2026-11-23 20:34:38 UTC"
+    "status": "error",
+    "message": "Page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://amtrak.com/\", waiting until \"networkidle\"\n"
 }
