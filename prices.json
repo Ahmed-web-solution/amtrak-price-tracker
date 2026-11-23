@@ -1,19 +1,19 @@
 {
-    "last_updated": "2026-11-23 22:22:21 UTC",
+    "last_updated": "2026-11-23 22:26:41 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
             "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button.mat-calendar-body-cell:not([disabled]):has-text(\\\"3\\\"), td[role=\\\"gridcell\\\"]:not([aria-disabled=\\\"true\\\"]):has-text(\\\"3\\\")\").first\n"
+            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button.mat-calendar-body-cell:not([disabled]), td[role=\\\"gridcell\\\"]:not([aria-disabled=\\\"true\\\"])\").nth(10)\n"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
             "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button.mat-calendar-body-cell:not([disabled]):has-text(\\\"3\\\"), td[role=\\\"gridcell\\\"]:not([aria-disabled=\\\"true\\\"]):has-text(\\\"3\\\")\").first\n"
+            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button.mat-calendar-body-cell:not([disabled]), td[role=\\\"gridcell\\\"]:not([aria-disabled=\\\"true\\\"])\").nth(10)\n"
         }
     ]
 }
