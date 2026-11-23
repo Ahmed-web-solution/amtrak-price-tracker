@@ -1,6 +1,19 @@
 {
-    "status": "error",
-    "version": "v5_station_code",
-    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:visible:has-text(\\\"(NYP)\\\"), li:visible:has-text(\\\"(NYP)\\\"), a:visible:has-text(\\\"(NYP)\\\")\").first\n",
-    "current_url": "https://www.amtrak.com/home"
+    "last_updated": "2026-11-23 21:47:57 UTC",
+    "routes": [
+        {
+            "from": "NYP",
+            "to": "LAX",
+            "route_name": "New York to Los Angeles",
+            "status": "error",
+            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:visible:has-text(\\\"(NYP)\\\"), li:visible:has-text(\\\"(NYP)\\\")\").first\n"
+        },
+        {
+            "from": "CHI",
+            "to": "SEA",
+            "route_name": "Chicago to Seattle",
+            "status": "error",
+            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"button:visible:has-text(\\\"(CHI)\\\"), li:visible:has-text(\\\"(CHI)\\\")\").first\n"
+        }
+    ]
 }
