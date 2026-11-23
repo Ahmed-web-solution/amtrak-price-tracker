@@ -15,7 +15,6 @@ def discover_amtrak_api():
         )
         page = context.new_page()
 
-        # Har network response ko listen karein
         def handle_response(response):
             if "amtrak.com" in response.url and "json" in response.headers.get("content-type", ""):
                 api_calls.append({
@@ -26,10 +25,12 @@ def discover_amtrak_api():
         page.on("response", handle_response)
 
         try:
-            page.goto("https://amtrak.com", timeout=60000, wait_until="networkidle")
-            page.wait_for_timeout(3000)
+            # Yahan networkidle ki jagah domcontentloaded use kiya hai
+            page.goto("https://amtrak.com", timeout=60000, wait_until="domcontentloaded")
+            
+            # Angular components aur search box render hone ke liye 8 second wait
+            page.wait_for_timeout(8000)
 
-            # Page par maujood saare input fields ke placeholders/names nikalein
             inputs = page.evaluate("""() => {
                 return Array.from(document.querySelectorAll('input')).map(i => ({
                     id: i.id,
@@ -41,6 +42,7 @@ def discover_amtrak_api():
 
             result = {
                 "status": "success",
+                "page_title": page.title(),
                 "inputs_found": inputs,
                 "json_apis_called": api_calls
             }
