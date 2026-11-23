@@ -1,5 +1,4 @@
 import json
-import re
 from datetime import datetime, timedelta, timezone
 from playwright.sync_api import sync_playwright
 
@@ -9,9 +8,10 @@ ROUTES = [
 ]
 
 def scrape_all_routes():
-    # Aaj se 21 din baad ki tareekh
-    target_dt = datetime.now(timezone.utc) + timedelta(days=21)
+    # Aaj se 10 din baad ki tareekh (taake calendar ke pehle view mein hi click ho jaye)
+    target_dt = datetime.now(timezone.utc) + timedelta(days=10)
     travel_date = target_dt.strftime("%m/%d/%Y")
+    day_number = str(target_dt.day)
 
     results_list = []
 
@@ -28,7 +28,7 @@ def scrape_all_routes():
 
         for route in ROUTES:
             try:
-                page.goto("https://amtrak.com", timeout=60000, wait_until="domcontentloaded")
+                page.goto("https://www.amtrak.com/home", timeout=60000, wait_until="domcontentloaded")
                 page.wait_for_timeout(4000)
 
                 cookie_btn = page.locator("#onetrust-accept-btn-handler")
@@ -36,7 +36,7 @@ def scrape_all_routes():
                     cookie_btn.click()
                     page.wait_for_timeout(1000)
 
-                # 1. From Station
+                # 1. From Station select karein
                 from_input = page.locator('input[aria-label="From"]:visible').first
                 from_input.click(force=True)
                 from_input.press_sequentially(route["from"], delay=150)
@@ -44,7 +44,7 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1000)
 
-                # 2. To Station
+                # 2. To Station select karein
                 to_input = page.locator('input[aria-label="To"]:visible').first
                 to_input.click(force=True)
                 to_input.press_sequentially(route["to"], delay=150)
@@ -52,18 +52,20 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Date
+                # 3. Date box click karke calendar kholein aur exact day button click karein
                 date_input = page.locator('input[amt-auto-test-id="fare-finder-depart-date-oneway"]:visible').first
                 date_input.click(force=True)
-                date_input.fill(travel_date)
-                page.keyboard.press("Tab")
+                page.wait_for_timeout(1500)
+
+                cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}")').first
+                cal_day.click(force=True)
                 page.wait_for_timeout(1000)
 
                 # 4. Find Trains click karein
                 find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
                 find_btn.click(force=True)
 
-                # Angular SPA navigation aur fares load hone ka wait (bina load event ke)
+                # Search results page (/tickets/departure.html) load hone ka wait karein
                 page.wait_for_timeout(15000)
 
                 # Screen text se Coach, Business, aur Private Rooms fares nikalein
