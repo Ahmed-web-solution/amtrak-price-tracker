@@ -1,6 +1,6 @@
 import json
 from datetime import datetime, timezone
-from playwright.sync_api import sync_playwright
+from patchright.sync_api import sync_playwright
 
 ROUTES = [
     {"from": "NYP", "to": "LAX", "route_name": "New York to Los Angeles"},
