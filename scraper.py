@@ -8,10 +8,9 @@ ROUTES = [
 ]
 
 def scrape_all_routes():
-    # Agli 15 tareekh (December 15) jo har mahine ke calendar mein hoti hai
+    # Aaj se 20 din baad ki tareekh (MM/DD/YYYY)
     target_dt = datetime.now(timezone.utc) + timedelta(days=20)
     travel_date = target_dt.strftime("%m/%d/%Y")
-    day_number = str(target_dt.day)
 
     results_list = []
 
@@ -52,26 +51,19 @@ def scrape_all_routes():
                 page.locator('.station-suggestion:visible, [role="listbox"] button:visible, ul[role="listbox"] li:visible, div[class*="dropdown"] button:visible').first.click(force=True)
                 page.wait_for_timeout(1500)
 
-                # 3. Depart Date ke parent container par click karein taake calendar khul jaye
-                date_container = page.locator('input[amt-auto-test-id="fare-finder-depart-date-oneway"]:visible').first.locator('xpath=..')
-                date_container.click()
-                page.wait_for_timeout(2000)
-
-                # Calendar mein kisi bhi enabled future date par click karein
-                cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}"), [class*="calendar"] td:not(.disabled):has-text("{day_number}")').first
-                if cal_day.is_visible():
-                    cal_day.click()
-                else:
-                    # Fallback: calendar ka koi bhi pehla available din click karein
-                    page.locator('button.mat-calendar-body-cell:not([disabled]), td[role="gridcell"]:not([aria-disabled="true"])').nth(10).click()
-
+                # 3. Depart Date mein keyboard se date type karke Enter dabayein
+                date_input = page.locator('input[amt-auto-test-id="fare-finder-depart-date-oneway"]:visible').first
+                date_input.click(force=True)
+                page.wait_for_timeout(500)
+                date_input.press_sequentially(travel_date, delay=100)
+                page.keyboard.press("Enter")
                 page.wait_for_timeout(1000)
 
-                # 4. Find Trains click karein
+                # 4. Find Trains button click karein
                 find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
-                find_btn.click()
+                find_btn.click(force=True)
 
-                # Results page load hone ka wait karein
+                # Search results page (/tickets/departure.html) load hone ka wait karein
                 page.wait_for_timeout(15000)
 
                 # Screen text se Coach, Business, aur Private Rooms fares nikalein
