@@ -43,20 +43,24 @@ def test_real_search():
                 cookie_btn.click()
                 page.wait_for_timeout(1000)
 
+            # 1. From Station type karein aur dropdown option click karein
             from_input = page.locator('input[aria-label="From"]:visible').first
             from_input.click()
-            from_input.fill("NYP")
-            page.wait_for_timeout(1500)
-            page.keyboard.press("Enter")
+            from_input.type("NYP", delay=150)
+            page.wait_for_timeout(2000)
+            page.locator('mat-option:visible, [role="option"]:visible').first.click()
+            page.wait_for_timeout(1000)
 
+            # 2. To Station type karein aur dropdown option click karein
             to_input = page.locator('input[aria-label="To"]:visible').first
             to_input.click()
-            to_input.fill("LAX")
+            to_input.type("LAX", delay=150)
+            page.wait_for_timeout(2000)
+            page.locator('mat-option:visible, [role="option"]:visible').first.click()
             page.wait_for_timeout(1500)
-            page.keyboard.press("Enter")
 
-            # Booking form ka visible date input
-            date_input = page.locator('input[placeholder="MM/DD/YYYY"]:visible').first
+            # 3. Ab date box khul chuka hoga, us par click karein
+            date_input = page.locator('input[placeholder="MM/DD/YYYY"]:visible, input[aria-label*="Depart"]:visible').first
             date_input.click()
             page.wait_for_timeout(1000)
 
@@ -69,9 +73,11 @@ def test_real_search():
 
             page.wait_for_timeout(1000)
 
+            # 4. Find Trains button click karein
             find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
             find_btn.click()
 
+            # Search results aur prices load hone ka wait karein
             page.wait_for_timeout(12000)
 
             body_text = page.inner_text("body")
@@ -79,7 +85,7 @@ def test_real_search():
 
             result = {
                 "status": "success",
-                "version": "v3_visible",
+                "version": "v4_dropdown",
                 "current_url": page.url,
                 "route": "NYP to LAX",
                 "travel_date": travel_date,
@@ -91,7 +97,7 @@ def test_real_search():
         except Exception as e:
             result = {
                 "status": "error",
-                "version": "v3_visible",
+                "version": "v4_dropdown",
                 "message": str(e),
                 "current_url": page.url
             }
