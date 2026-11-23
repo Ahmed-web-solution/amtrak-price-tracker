@@ -38,13 +38,11 @@ def test_real_search():
             page.goto("https://www.amtrak.com/home", timeout=60000, wait_until="domcontentloaded")
             page.wait_for_timeout(5000)
 
-            # Cookie popup close karein
             cookie_btn = page.locator("#onetrust-accept-btn-handler")
             if cookie_btn.is_visible():
                 cookie_btn.click()
                 page.wait_for_timeout(1000)
 
-            # Sirf VISIBLE From aur To boxes select karein
             from_input = page.locator('input[aria-label="From"]:visible').first
             from_input.click()
             from_input.fill("NYP")
@@ -57,27 +55,23 @@ def test_real_search():
             page.wait_for_timeout(1500)
             page.keyboard.press("Enter")
 
-            # Sirf VISIBLE Date box par click karke calendar kholein
-            date_input = page.locator('input[aria-label*="Departure Date"]:visible').first
+            # Booking form ka visible date input
+            date_input = page.locator('input[placeholder="MM/DD/YYYY"]:visible').first
             date_input.click()
             page.wait_for_timeout(1000)
 
-            # Calendar mein enabled date button click karein
             cal_day = page.locator(f'button.mat-calendar-body-cell:not([disabled]):has-text("{day_number}"), td[role="gridcell"]:not([aria-disabled="true"]):has-text("{day_number}")').first
             if cal_day.is_visible():
                 cal_day.click()
             else:
-                # Fallback: agar direct typing allowed ho
                 date_input.fill(travel_date)
                 page.keyboard.press("Enter")
 
             page.wait_for_timeout(1000)
 
-            # Sirf VISIBLE Find Trains button click karein
             find_btn = page.locator('button:visible:has-text("Find Trains"), button:visible:has-text("FIND TRAINS")').first
             find_btn.click()
 
-            # Results load hone ka wait karein
             page.wait_for_timeout(12000)
 
             body_text = page.inner_text("body")
@@ -85,6 +79,7 @@ def test_real_search():
 
             result = {
                 "status": "success",
+                "version": "v3_visible",
                 "current_url": page.url,
                 "route": "NYP to LAX",
                 "travel_date": travel_date,
@@ -96,6 +91,7 @@ def test_real_search():
         except Exception as e:
             result = {
                 "status": "error",
+                "version": "v3_visible",
                 "message": str(e),
                 "current_url": page.url
             }
