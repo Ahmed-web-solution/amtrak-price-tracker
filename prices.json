@@ -1,19 +1,33 @@
 {
-    "last_updated": "2026-11-24 00:18:54 UTC",
+    "last_updated": "2026-11-24 00:22:39 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "status": "error",
-            "error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"text=/Coach|Private Rooms|Sold Out/i\") to be visible\n    2 \u00d7 locator resolved to 2 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    - waiting for \"https://www.amtrak.com/tickets/departure.html\" navigation to finish...\n    - navigated to \"https://www.amtrak.com/tickets/departure.html\"\n    11 \u00d7 locator resolved to hidden <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    20 \u00d7 locator resolved to 15 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n"
+            "travel_date": "Wednesday, December 9, 2026",
+            "lowest_fare": "Sold Out",
+            "fares_breakdown": {
+                "coach": "Sold Out / N/A",
+                "business": "Not Offered / Sold Out",
+                "private_room": "Sold Out / N/A"
+            },
+            "debug_url": "https://www.amtrak.com/tickets/departure.html",
+            "status": "success"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
-            "status": "error",
-            "error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"text=/Coach|Private Rooms|Sold Out/i\") to be visible\n    5 \u00d7 locator resolved to 2 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    - waiting for navigation to finish...\n    - navigated to \"https://www.amtrak.com/tickets/departure.html\"\n    6 \u00d7 locator resolved to hidden <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    31 \u00d7 locator resolved to 14 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n"
+            "travel_date": "Wednesday, December 9, 2026",
+            "lowest_fare": "Sold Out",
+            "fares_breakdown": {
+                "coach": "Sold Out / N/A",
+                "business": "Not Offered / Sold Out",
+                "private_room": "Sold Out / N/A"
+            },
+            "debug_url": "https://www.amtrak.com/tickets/departure.html",
+            "status": "success"
         }
     ]
 }
