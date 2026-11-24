@@ -1,26 +1,19 @@
 {
-    "last_updated": "2026-11-24 00:07:18 UTC",
+    "last_updated": "2026-11-24 00:13:30 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "travel_date": "Friday, December 4, 2026",
-            "lowest_fare": "Sold Out",
-            "fares_breakdown": {
-                "coach": "Sold Out / N/A",
-                "business": "Not Offered / Sold Out",
-                "private_room": "Sold Out / N/A"
-            },
-            "debug_url": "https://www.amtrak.com/tickets/departure.html",
-            "status": "success"
+            "status": "error",
+            "error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"text=/Coach|Private Rooms|Sold Out/i\") to be visible\n    6 \u00d7 locator resolved to 2 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-di-id=\"di-id-fd948396-f5e960b6\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    - waiting for \"https://www.amtrak.com/tickets/departure.html\" navigation to finish...\n    - navigated to \"https://www.amtrak.com/tickets/departure.html\"\n    7 \u00d7 locator resolved to hidden <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    - locator resolved to 9 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    27 \u00d7 locator resolved to 15 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
             "status": "error",
-            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[aria-label=\\\"From\\\"]:visible\").first\n"
+            "error": "Page.wait_for_selector: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"text=/Coach|Private Rooms|Sold Out/i\") to be visible\n    7 \u00d7 locator resolved to 2 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    - waiting for navigation to finish...\n    - navigated to \"https://www.amtrak.com/tickets/departure.html\"\n    8 \u00d7 locator resolved to hidden <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n    25 \u00d7 locator resolved to 14 elements. Proceeding with the first one: <a target=\"_self\" class=\"link-content\" data-automation-id=\"First Class Private Rooms\" href=\"/onboard/onboard-accommodations-for-all-your-needs/sleeper-car-accommodations\">\u21b5\u21b5                First Class Private Rooms\u21b5     \u2026</a>\n"
         }
     ]
 }
