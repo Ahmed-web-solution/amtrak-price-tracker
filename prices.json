@@ -1,33 +1,26 @@
 {
-    "last_updated": "2026-11-23 23:07:19 UTC",
+    "last_updated": "2026-11-24 00:07:18 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "travel_date": "Thursday, December 3, 2026",
+            "travel_date": "Friday, December 4, 2026",
             "lowest_fare": "Sold Out",
             "fares_breakdown": {
                 "coach": "Sold Out / N/A",
                 "business": "Not Offered / Sold Out",
                 "private_room": "Sold Out / N/A"
             },
-            "debug_url": "https://www.amtrak.com/home",
+            "debug_url": "https://www.amtrak.com/tickets/departure.html",
             "status": "success"
         },
         {
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
-            "travel_date": "Thursday, December 3, 2026",
-            "lowest_fare": "Sold Out",
-            "fares_breakdown": {
-                "coach": "Sold Out / N/A",
-                "business": "Not Offered / Sold Out",
-                "private_room": "Sold Out / N/A"
-            },
-            "debug_url": "https://www.amtrak.com/home",
-            "status": "success"
+            "status": "error",
+            "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"input[aria-label=\\\"From\\\"]:visible\").first\n"
         }
     ]
 }
