@@ -1,16 +1,17 @@
 {
-    "last_updated": "2026-11-24 00:22:39 UTC",
+    "last_updated": "2026-11-24 00:32:19 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
             "travel_date": "Wednesday, December 9, 2026",
-            "lowest_fare": "Sold Out",
+            "total_trains_found": 6,
+            "lowest_fare": "$386",
             "fares_breakdown": {
-                "coach": "Sold Out / N/A",
-                "business": "Not Offered / Sold Out",
-                "private_room": "Sold Out / N/A"
+                "coach": "$386",
+                "business": "$410",
+                "private_room": "$1,123"
             },
             "debug_url": "https://www.amtrak.com/tickets/departure.html",
             "status": "success"
@@ -20,11 +21,12 @@
             "to": "SEA",
             "route_name": "Chicago to Seattle",
             "travel_date": "Wednesday, December 9, 2026",
-            "lowest_fare": "Sold Out",
+            "total_trains_found": 6,
+            "lowest_fare": "$179",
             "fares_breakdown": {
-                "coach": "Sold Out / N/A",
+                "coach": "$179",
                 "business": "Not Offered / Sold Out",
-                "private_room": "Sold Out / N/A"
+                "private_room": "$709"
             },
             "debug_url": "https://www.amtrak.com/tickets/departure.html",
             "status": "success"
