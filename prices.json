@@ -1,11 +1,11 @@
 {
-    "last_updated": "2026-11-27 23:07:27 UTC",
+    "last_updated": "2026-11-28 05:44:22 UTC",
     "routes": [
         {
             "from": "NYP",
             "to": "LAX",
             "route_name": "New York to Los Angeles",
-            "travel_date": "Monday, December 7, 2026",
+            "travel_date": "Tuesday, December 8, 2026",
             "lowest_fare": "Sold Out",
             "fares_breakdown": {
                 "coach": "Sold Out / N/A",
@@ -19,7 +19,7 @@
             "from": "CHI",
             "to": "SEA",
             "route_name": "Chicago to Seattle",
-            "travel_date": "Monday, December 7, 2026",
+            "travel_date": "Tuesday, December 8, 2026",
             "lowest_fare": "Sold Out",
             "fares_breakdown": {
                 "coach": "Sold Out / N/A",
